@@ -1,6 +1,7 @@
 from aiogram import executor
 from config import dp
 from misc import set_default_command
+import handlers
 
 
 async def on_startup(dp):
