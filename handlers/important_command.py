@@ -23,4 +23,3 @@ async def com_start(message: types.Message):
 async def com_start(message: types.Message):
     await message.answer('Бот работает с расписанием занятий ОмГТУ, всё просто присылай название группы, '
                          'затем время, а Бот всё сделает за тебя👍')
-    await message.delete()
