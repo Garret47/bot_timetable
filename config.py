@@ -4,6 +4,12 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+host = os.getenv('host')
+user = os.getenv('user')
+password = os.getenv('password')
+database = os.getenv('database')
+url_id = 'https://rasp.omgtu.ru/api/search'
+url_group = 'https://rasp.omgtu.ru/api/schedule/group/'
 bot = Bot(token=f'{os.getenv("BOT_TOKEN")}')
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
