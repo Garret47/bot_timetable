@@ -1,41 +1,23 @@
-from .func_request import request_id, request_timetable
+from .func_request import request_timetable
 from .treatment_answer import sort_answer
-from aiogram.types import ReplyKeyboardRemove
 from config import bot, url_id, url_group
-import datetime
 from aiogram import Bot
-from keyboards import kb_main_group
+from bd import choice_current_group_id
 
 bot: Bot
 
 
-async def appeals_server(url_id, url_group, params_id, params_group):
-    id_label_group = await request_id(url_id, params=params_id)
-    if id_label_group is None:
-        return None
-    elif id_label_group == 'Лёг':
-        return 'Лёг'
-    elif id_label_group[1]:
-        params_id['term'] = id_label_group[1]
-    timetable_group = await request_timetable(f'{url_group}{id_label_group[0]}', params=params_group)
-    arr = await sort_answer(timetable_group, params_id['term'])
+async def appeals_server(url_group, group_name_id, params_group):
+    timetable_group = await request_timetable(f'{url_group}{group_name_id[0]}', params=params_group)
+    arr = await sort_answer(timetable_group, group_name_id[1])
     return arr
 
 
 async def response_processing_user(message, state, date_start, date_finish):
+    group_name_id = (await choice_current_group_id(message.chat.id))[0][0].split(" ")
     date_start = str(date_start).split(' ')[0]
     date_finish = str(date_finish).split(' ')[0]
-    async with state.proxy() as data:
-        arr = await appeals_server(url_id, url_group,
-                                   {'term': data['group'], 'type': 'group'},
-                                   {'start': date_start, 'finish': date_finish})
-    if arr and arr != 'Лёг':
-        for i in arr:
-            await message.answer(i, parse_mode='HTML')
-    elif arr == 'Лёг':
-        await message.answer('Похоже сайт снова лёг')
-        await bot.send_sticker(sticker='CAACAgIAAxkBAAEGh5xjfudBmql8bakFwcK37mN2P_E5igACDQEAAlKJkSMj1EWMeMTHeysE',
-                               chat_id=message.chat.id)
-    elif arr is None:
-        await message.answer('Извините, но похоже вы ввели группу, которую невозможно распознать')
+    arr = await appeals_server(url_group, group_name_id, {'start': date_start, 'finish': date_finish})
+    for i in arr:
+        await message.answer(i, parse_mode='HTML')
     await state.finish()

@@ -1,11 +1,10 @@
-from keyboards import kb_main_group
 from bd import choice_group_name
-from aiogram.types import KeyboardButton
+from aiogram.types import KeyboardButton, ReplyKeyboardRemove, ReplyKeyboardMarkup
 
 
 async def create_btn(id_user):
     arr = await choice_group_name(id_user)
-    kb_main_group['keyboard'] = []
+    kb_main_group = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     if arr:
         group = arr[0][1].split(' ')
         btn = sum(kb_main_group['keyboard'], [])
@@ -15,4 +14,4 @@ async def create_btn(id_user):
                 kb_main_group.insert(KeyboardButton(text=i))
         return kb_main_group
     else:
-        return kb_main_group
+        return ReplyKeyboardRemove()

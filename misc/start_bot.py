@@ -6,5 +6,7 @@ async def set_default_command(dp: Dispatcher):
     await dp.bot.set_my_commands(
         [BotCommand('start', 'Запуск Бота'),
          BotCommand('help', 'Список комманд'),
-         BotCommand('descr', 'Описание')]
+         BotCommand('descr', 'Описание'),
+         BotCommand('add', 'Добавить группу в избранное'),
+         BotCommand('remove', 'Удалить группу из избранного')]
     )

@@ -23,3 +23,9 @@ async def update_group_name(user_id, groups, group=None):
 async def delete_group_name(user_id):
     cur.execute(f'delete from favorite_group where user_id = {user_id};')
     mydb.commit()
+
+
+async def update_group_current_id(user_id, group_id, name_group):
+    cur.execute(f'update favorite_group set current_group_and_id = concat("{group_id}", " ", "{name_group}") '
+                f'where user_id={user_id}')
+    mydb.commit()

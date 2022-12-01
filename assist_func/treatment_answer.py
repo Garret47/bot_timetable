@@ -8,6 +8,8 @@ async def sort_answer(timetable_group, group):
         if date != item['date']:
             date = item['date']
             day = item['dayOfWeekString']
+            extract_date = date.split('.')[::-1]
+            extract_date = '-'.join(extract_date)
             filter_timetable_date = reduce(lambda ans, i: ans + f'Группа: {i["subGroup"] if i["subGroup"] else group}\n'
                                                                 f'<b>Время: {i["beginLesson"]} - {i["endLesson"]}</b>\n'
                                                                 f'Название дисциплины: <b>{i["discipline"]}</b>\n'
@@ -16,6 +18,7 @@ async def sort_answer(timetable_group, group):
                                                                 f'Аудитория: {i["auditorium"]}\n'
                                                                 f'--------------------------------\n',
                                            filter(lambda i: i['date'] == date, timetable_group),
+                                           f'Дата: {extract_date}\n'
                                            f'День недели: {day}\n'
                                            f'--------------------------------\n')
             arr.append(filter_timetable_date)
