@@ -31,14 +31,11 @@ async def response_processing_user(message, state, date_start, date_finish):
                                    {'start': date_start, 'finish': date_finish})
     if arr and arr != 'Лёг':
         for i in arr:
-            await message.answer(i, parse_mode='HTML', reply_markup=ReplyKeyboardRemove())
-        await state.finish()
+            await message.answer(i, parse_mode='HTML')
     elif arr == 'Лёг':
         await message.answer('Похоже сайт снова лёг')
         await bot.send_sticker(sticker='CAACAgIAAxkBAAEGh5xjfudBmql8bakFwcK37mN2P_E5igACDQEAAlKJkSMj1EWMeMTHeysE',
-                               chat_id=message.from_user.id, reply_markup=ReplyKeyboardRemove())
-        await state.finish()
-    elif not arr:
-        await message.answer('Извините, но похоже вы ввели группу, которую невозможно распознать',
-                             reply_markup=ReplyKeyboardRemove())
-        await state.finish()
+                               chat_id=message.chat.id)
+    elif arr is None:
+        await message.answer('Извините, но похоже вы ввели группу, которую невозможно распознать')
+    await state.finish()

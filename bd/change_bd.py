@@ -10,6 +10,16 @@ async def insert_group_name(user_id, group):
     mydb.commit()
 
 
-async def update_group_name(user_id, groups, group):
-    cur.execute(f'update favorite_group set group_name = concat("{groups[0][1]}", " ", "{group}") where user_id={user_id}')
+async def update_group_name(user_id, groups, group=None):
+    if group:
+        cur.execute(
+            f'update favorite_group set group_name = concat("{groups}", " ", "{group}") where user_id={user_id}')
+    else:
+        cur.execute(
+            f'update favorite_group set group_name = "{groups}" where user_id={user_id}')
+    mydb.commit()
+
+
+async def delete_group_name(user_id):
+    cur.execute(f'delete from favorite_group where user_id = {user_id};')
     mydb.commit()

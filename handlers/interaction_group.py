@@ -3,6 +3,7 @@ from config import dp
 from bd import choice_group_name
 from state_machine import FSMAdd, FSMRemove
 from aiogram.dispatcher.filters.state import StatesGroup
+from misc import create_btn
 
 dp: Dispatcher
 FSMTime: StatesGroup
@@ -21,8 +22,9 @@ async def add_group(message: types.Message):
 @dp.message_handler(commands=['remove'])
 async def remove_group(message: types.Message):
     arr = await choice_group_name(message.from_user.id)
+    kb_main_group = await create_btn(message.from_user.id)
     if arr:
-        await message.answer('Напишите пожалуйста название группы')
+        await message.answer('Напишите пожалуйста название группы', reply_markup=kb_main_group)
         await FSMRemove.group_remove.set()
     else:
         await message.answer('Извините, но избранных групп у вас нет')

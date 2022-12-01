@@ -5,6 +5,7 @@ from aiogram.types import KeyboardButton
 
 async def create_btn(id_user):
     arr = await choice_group_name(id_user)
+    kb_main_group['keyboard'] = []
     if arr:
         group = arr[0][1].split(' ')
         btn = sum(kb_main_group['keyboard'], [])
