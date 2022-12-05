@@ -1,4 +1,4 @@
-import mysql.connector
+import psycopg2
 from bd_connect import mydb, cur
 
 cur: mysql.connector.connection_cext.CMySQLCursor

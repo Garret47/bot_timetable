@@ -1,12 +1,13 @@
-from mysql.connector import connect
-from config import host, user, password, database
+from psycopg2 import connect
+from config import host, user, password, database, port
 
 try:
     mydb = connect(
         host=host,
         user=user,
         password=password,
-        database=database
+        database=database,
+        port=int(port)
     )
     cur = mydb.cursor()
 except Exception as e:
