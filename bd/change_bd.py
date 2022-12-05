@@ -2,8 +2,6 @@ import psycopg2
 from bd_connect import mydb, cur
 from .choice_group import choice_group_name
 
-cur: mysql.connector.connection_cext.CMySQLCursor
-
 
 async def insert_group_name(user_id, group):
     cur.execute(f'insert into favorite_group values ({user_id}, "{group}")')
