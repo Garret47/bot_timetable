@@ -11,4 +11,9 @@ try:
     )
     cur = mydb.cursor()
 except Exception as e:
+    print(port)
+    print(host)
+    print(user)
+    print(password)
+    print(database)
     print(e)
