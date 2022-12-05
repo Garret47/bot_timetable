@@ -18,6 +18,12 @@ async def response_processing_user(message, state, date_start, date_finish):
     date_start = str(date_start).split(' ')[0]
     date_finish = str(date_finish).split(' ')[0]
     arr = await appeals_server(url_group, group_name_id, {'start': date_start, 'finish': date_finish})
-    for i in arr:
-        await message.answer(i, parse_mode='HTML')
+    if arr:
+        for i in arr:
+            await message.answer(i, parse_mode='HTML')
+    else:
+        await message.answer('Возрадуйтесь пар нет)')
+        await bot.send_sticker(chat_id=message.chat.id,
+                               sticker='CAACAgIAAxkBAAEGpPVjiWMxK3b9bLvluxHkaDj5Iq7ERwACNg8AAh4J8UlSVZzp6JZteysE')
     await state.finish()
+
